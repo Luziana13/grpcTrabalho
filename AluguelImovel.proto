@@ -1,0 +1,43 @@
+syntax = "proto3";
+package AluguelImovel;
+
+//mensagem: objeto json que armazenda dados que sao trocados entre o cliente e servidor
+message Reserva {
+    string codigo = 1;
+    string dataInicial = 2;
+    string dataFinal = 3;
+}
+message Imovel {
+    int32 codigo = 1;
+    string nome = 2;
+    string tipo = 3;
+    string endereco = 4;
+    bool disponivel = 5;
+    repeated Reserva reservas = 6;
+}
+message Resposta{
+    string resposta = 1;
+}
+message Vazia { }
+
+message ArrayDeImovel {
+    repeated Imovel imovel = 1;
+}
+message ArrayDeResposta{
+    repeated Resposta respostas = 1;
+}
+message IdentificadorImovel{
+    string codigo = 1;
+}
+
+//Servicos = mesmo conceito de api
+service ImovelService {
+    rpc ReservarUmImovel (Reserva) returns (Resposta);
+    rpc ListarImoveisDisponiveis (ArrayDeImovel) returns (Resposta);
+    rpc CadastrarImovel (Imovel) returns (Vazia);
+    rpc DatasDisponiveisParaAluguel (IdentificadorImovel) returns (Resposta);
+}
+
+
+
+
